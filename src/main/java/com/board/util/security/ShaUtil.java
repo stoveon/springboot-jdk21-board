@@ -1,83 +1,46 @@
 package com.board.util.security;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+/**
+ * SHA 해시 유틸 (순수 SHA-256)
+ */
 @Slf4j
 public class ShaUtil {
 
-    private static final Gson GSON = new Gson();
-
     private static final String SHA256 = "SHA-256";
 
-    public static String getHashString(String str) {
-        String result = "";
-        if (str != null && !str.isEmpty()) {
-            try {
-                MessageDigest digest = MessageDigest.getInstance(SHA256);
-                byte[] starByte = str.getBytes(StandardCharsets.UTF_8);
-                result = toHexString(digest.digest(starByte));
-            } catch (Exception e) {
-                log.error("{} | {}", e, e.getMessage());
-            }
+    private ShaUtil() {}
+
+    public static String sha256(String input) {
+        return sha256(input, null);
+    }
+
+    public static String sha256(String input, String salt) {
+        if (input == null) return "";
+
+        if (salt == null) salt = "";
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance(SHA256);
+            digest.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] hashBytes = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            return bytesToHex(hashBytes);
+        } catch (NoSuchAlgorithmException e) {
+            log.error("SHA-256 not available: {}", e.getMessage());
+            return "";
         }
-        return result;
     }
 
-    /**
-     * 16진수 문자열을 반환한다.
-     *
-     * @param block
-     * @return
-     */
-    private static String toHexString(byte[] block) {
-
-        StringBuffer buf = new StringBuffer();
-
-        int len = block.length;
-
-        for (int i = 0; i < len; i++) {
-            byte2hex(block[i], buf);
+    private static String bytesToHex(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02X", b));
         }
-
-        return buf.toString();
+        return sb.toString();
     }
-
-    /**
-     * byte -> 16진수
-     *
-     * @param b
-     * @param buf
-     */
-    private static void byte2hex(byte b, StringBuffer buf) {
-
-        char[] hexChars = {
-                '0',
-                '1',
-                '2',
-                '3',
-                '4',
-                '5',
-                '6',
-                '7',
-                '8',
-                '9',
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F'
-        };
-
-        int high = ((b & 0xf0) >> 4);
-        int low = (b & 0x0f);
-
-        buf.append(hexChars[high]);
-        buf.append(hexChars[low]);
-    }
-
 }
