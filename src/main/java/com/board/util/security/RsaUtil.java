@@ -1,4 +1,4 @@
-package com.board.utils.security;
+package com.board.util.security;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
