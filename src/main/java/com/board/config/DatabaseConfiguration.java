@@ -25,7 +25,7 @@ import javax.sql.DataSource;
 @PropertySource("classpath:/database.properties")
 public class DatabaseConfiguration {
 
-    final ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     public DatabaseConfiguration(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
@@ -47,13 +47,13 @@ public class DatabaseConfiguration {
         SqlSessionFactoryBean session = new SqlSessionFactoryBean();
         session.setDataSource(dataSource);
         session.setMapperLocations(applicationContext.getResources("classpath:mapper/*.xml"));
-        session.setConfigLocation(new PathMatchingResourcePatternResolver().getResource("classpath:mybatis/mybatis-config.xml"));
+        session.setConfigLocation(new PathMatchingResourcePatternResolver()
+                .getResource("classpath:mybatis/mybatis-config.xml"));
         return session.getObject();
     }
 
     @Bean
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-        final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
-        return sqlSessionTemplate;
+        return new SqlSessionTemplate(sqlSessionFactory);
     }
 }
