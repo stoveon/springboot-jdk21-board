@@ -9,15 +9,15 @@
     <title>SB Admin 2 - Login (Ajax)</title>
 
     <!-- CSS -->
-    <link href="${contextPath}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
-    <link href="${contextPath}/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="${contextPath}/static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="${contextPath}/static/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="${contextPath}/static/font/nunito/nunito.css" rel="stylesheet">
 
     <!-- JS -->
-    <script src="${contextPath}/vendor/jquery/jquery.min.js"></script>
-    <script src="${contextPath}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="${contextPath}/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="${contextPath}/js/sb-admin-2.min.js"></script>
+    <script src="${contextPath}/static/vendor/jquery/jquery.min.js"></script>
+    <script src="${contextPath}/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="${contextPath}/static/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="${contextPath}/static/js/sb-admin-2.min.js"></script>
 </head>
 <body class="bg-gradient-primary">
 <div class="container">
@@ -54,20 +54,20 @@
                                         Login
                                     </button>
                                     <hr>
-                                    <a href="${contextPath}/oauth/google" class="btn btn-google btn-user btn-block">
+                                    <a href="" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Login with Google
                                     </a>
-                                    <a href="${contextPath}/oauth/facebook" class="btn btn-facebook btn-user btn-block">
+                                    <a href="" class="btn btn-facebook btn-user btn-block">
                                         <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                     </a>
                                 </form>
 
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="${contextPath}/forgot-password">Forgot Password?</a>
+                                    <a class="small" href="${contextPath}/auth/forgot-password">Forgot Password?</a>
                                 </div>
                                 <div class="text-center">
-                                    <a class="small" href="${contextPath}/register">Create an Account!</a>
+                                    <a class="small" href="${contextPath}/auth/register">Create an Account!</a>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
             };
 
             $.ajax({
-                url: '${contextPath}/api/login', // Ajax 로그인 엔드포인트
+                url: '${contextPath}/auth/login', // Ajax 로그인 엔드포인트
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(data),
